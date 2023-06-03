@@ -13,6 +13,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "app_user")
 public class User {
+	//This atttribute would be used as username
+	private String email;
+	private String password;
+	
 	@Id
 	@GeneratedValue
 	private int id;
