@@ -19,7 +19,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue
-	private int id;
+	private long id;
 	@OneToOne
 	@JoinColumn(name = "employee_id")
 	@JsonIgnore
