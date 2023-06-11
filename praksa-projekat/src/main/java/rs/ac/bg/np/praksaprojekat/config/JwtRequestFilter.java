@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import rs.ac.bg.np.praksaprojekat.domain.User;
 import rs.ac.bg.np.praksaprojekat.service.UserService;
+import rs.ac.bg.np.praksaprojekat.service.imp.JWTUserDetailsService;
 
 import java.io.IOException;
 
@@ -21,7 +22,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserService userService;
+    private JWTUserDetailsService userService;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -52,7 +53,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // Once we get the token validate it.
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            User userDetails = this.userService.loadUserByUsername(username);
+            UserDetails userDetails = this.userService.loadUserByUsername(username);
 
             // if token is valid configure Spring Security to manually set
             // authentication
