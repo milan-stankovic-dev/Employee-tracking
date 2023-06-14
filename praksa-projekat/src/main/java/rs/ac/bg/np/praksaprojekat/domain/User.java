@@ -21,6 +21,7 @@ import java.util.List;
 @Builder
 @Table(name = "app_user")
 public class User  implements UserDetails {
+	private static final long serialVersionUID = 8055251038771851999L;
 	//This atttribute would be used as username
 	private String email;
 	private String password;
