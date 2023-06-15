@@ -42,4 +42,18 @@ public class AuthenticationService {
                 .build();
     }
 
+    public AuthenticationResponse register(AuthenticationRequest request) {
+        var user=User.builder()
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .role(Role.USER)
+                .build();
+        userRepository.save(user);
+
+        var jwtToken=jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .admin(false)
+                .token(jwtToken)
+                .build();
+    }
 }
