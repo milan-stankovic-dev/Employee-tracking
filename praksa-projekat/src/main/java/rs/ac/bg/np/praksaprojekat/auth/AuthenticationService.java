@@ -46,7 +46,7 @@ public class AuthenticationService {
         var user=User.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
-                .role(Role.USER)
+                .role(Role.ADMIN)
                 .build();
         userRepository.save(user);
 
