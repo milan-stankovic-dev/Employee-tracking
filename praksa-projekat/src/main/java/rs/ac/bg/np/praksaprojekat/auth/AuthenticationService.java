@@ -52,7 +52,7 @@ public class AuthenticationService {
 
         var jwtToken=jwtService.generateToken(user);
         return AuthenticationResponse.builder()
-                .admin(false)
+                .admin(user.getRole() == Role.ADMIN)
                 .token(jwtToken)
                 .build();
     }
