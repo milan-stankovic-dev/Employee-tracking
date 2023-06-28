@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.bg.np.praksaprojekat.service.UserService;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
