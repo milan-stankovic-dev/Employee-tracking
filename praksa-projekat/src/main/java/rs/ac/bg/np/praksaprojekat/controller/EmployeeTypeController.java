@@ -20,6 +20,7 @@ public class EmployeeTypeController {
     @PostMapping("/newEmpType")
     public EmployeeType createNewEmployeeType(String newEmpType) throws Exception {
         return employeeTypeService.createNewEmployeeType(newEmpType);
+
     }
 
 }

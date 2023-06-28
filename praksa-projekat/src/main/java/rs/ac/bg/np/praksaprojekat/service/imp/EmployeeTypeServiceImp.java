@@ -20,6 +20,7 @@ public class EmployeeTypeServiceImp implements EmployeeTypeService {
         Optional<EmployeeType> optionalEmployeeType = employeeTypeRepository.findByName(newEmpType);
         if(optionalEmployeeType.isPresent()){
             throw new Exception("This name of EmployeeType already exists!");
+
         }
 
 
