@@ -27,14 +27,17 @@ public class AuthenticationService {
     private  JwtService jwtService;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()
                 )
         );
+        System.out.println(2);
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
+        System.out.println(user.getEmail());
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -54,6 +57,18 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .admin(user.getRole() == Role.ADMIN)
                 .token(jwtToken)
+                .build();
+    }
+    public AuthenticationResponse login (AuthenticationRequest request) {
+
+       // System.out.println(2);
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow();
+       // System.out.println(user.getEmail());
+        String jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .admin(user.getRole()==Role.ADMIN)
                 .build();
     }
 }
