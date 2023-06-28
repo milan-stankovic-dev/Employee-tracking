@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.bg.np.praksaprojekat.service.EmployeeService;
 
 @RestController
-@RequestMapping("/api/v1/employee")
+@RequestMapping("/api/employee")
 public class EmployeeController {
 
     @Autowired
