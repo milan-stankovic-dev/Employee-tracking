@@ -18,7 +18,7 @@ public class EmployeeTypeController {
     @Autowired
     private EmployeeTypeServiceImp employeeTypeService;
 
-    @PostMapping("/newEmpType/{type}")
+    @PostMapping("/{type}")
     public EmployeeType createNewEmployeeType(@PathVariable String type) throws Exception {
         return employeeTypeService.createNewEmployeeType(type);
 
