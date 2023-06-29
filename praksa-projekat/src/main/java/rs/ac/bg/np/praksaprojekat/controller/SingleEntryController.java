@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.bg.np.praksaprojekat.service.SingleEntryService;
 
 @RestController
-@RequestMapping("/api/v1/single-entry")
+@RequestMapping("/api/single-entry")
 public class SingleEntryController {
 
     @Autowired

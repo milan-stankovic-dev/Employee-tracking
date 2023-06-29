@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.bg.np.praksaprojekat.service.TimeOffService;
 
 @RestController
-@RequestMapping("/api/v1/time-off")
+@RequestMapping("/api/time-off")
 public class TimeOffController {
 
     @Autowired
