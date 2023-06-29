@@ -10,10 +10,13 @@ import rs.ac.bg.np.praksaprojekat.config.JwtService;
 import rs.ac.bg.np.praksaprojekat.domain.Role;
 import rs.ac.bg.np.praksaprojekat.domain.User;
 import rs.ac.bg.np.praksaprojekat.exception.UserNotLoggedInException;
+import rs.ac.bg.np.praksaprojekat.exception.UsernameTakenException;
 import rs.ac.bg.np.praksaprojekat.exception.WrongValueProvidedException;
 import rs.ac.bg.np.praksaprojekat.repository.UserRepository;
 import rs.ac.bg.np.praksaprojekat.service.UserService;
 import rs.ac.bg.np.praksaprojekat.userUtil.PasswordChangePayload;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -63,6 +66,30 @@ public class UserServiceImp implements UserService {
 
         userFromDB.setPassword(payload.newPassword());
         return userRepository.save(userFromDB);
+    }
+
+    @Override
+    public User editUser(long id, User userForEdit) {
+        if(userForEdit == null){
+            throw new NullPointerException("User cannot be null.");
+        }
+        Optional<User> usernameCheckFromDbUser = userRepository.findByEmail(
+                userForEdit.getEmail()
+        );
+
+        if(usernameCheckFromDbUser.isPresent()){
+            throw new UsernameTakenException("This username is taken.");
+        }
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if(userOptional.isEmpty()){
+            throw new EntityNotFoundException("There is no user with given id.");
+        }
+        User user = userOptional.get();
+        user.setEmail(userForEdit.getEmail());
+        user.setPassword(userForEdit.getPassword());
+
+        return userRepository.save(user);
     }
 
     private long getLoggedInUserId() {

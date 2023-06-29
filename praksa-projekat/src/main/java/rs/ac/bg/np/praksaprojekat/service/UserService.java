@@ -8,4 +8,6 @@ public interface UserService {
     public void init();
 
     User changePasswordOf(PasswordChangePayload payload) throws IllegalAccessException;
+
+    User editUser(long id, User userForEdit);
 }
