@@ -27,6 +27,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/user/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/employee-type/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/api/employee/add").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
