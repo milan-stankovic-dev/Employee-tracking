@@ -27,14 +27,12 @@ public class AuthenticationService {
     private  JwtService jwtService;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()
                 )
         );
-        System.out.println(2);
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         System.out.println(user.getEmail());
@@ -60,11 +58,8 @@ public class AuthenticationService {
                 .build();
     }
     public AuthenticationResponse login (AuthenticationRequest request) {
-
-       // System.out.println(2);
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
-       // System.out.println(user.getEmail());
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
