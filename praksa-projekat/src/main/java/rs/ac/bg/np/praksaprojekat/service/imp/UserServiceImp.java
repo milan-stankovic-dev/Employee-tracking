@@ -10,7 +10,7 @@ import rs.ac.bg.np.praksaprojekat.config.JwtService;
 import rs.ac.bg.np.praksaprojekat.domain.Role;
 import rs.ac.bg.np.praksaprojekat.domain.User;
 import rs.ac.bg.np.praksaprojekat.exception.UserNotLoggedInException;
-import rs.ac.bg.np.praksaprojekat.exception.UsernameTakenException;
+//import rs.ac.bg.np.praksaprojekat.exception.UsernameTakenException;
 import rs.ac.bg.np.praksaprojekat.exception.WrongValueProvidedException;
 import rs.ac.bg.np.praksaprojekat.repository.UserRepository;
 import rs.ac.bg.np.praksaprojekat.service.UserService;
@@ -78,7 +78,7 @@ public class UserServiceImp implements UserService {
         );
 
         if(usernameCheckFromDbUser.isPresent()){
-            throw new UsernameTakenException("This username is taken.");
+            throw new RuntimeException("This username is taken.");
         }
         Optional<User> userOptional = userRepository.findById(id);
 
@@ -90,6 +90,20 @@ public class UserServiceImp implements UserService {
         user.setPassword(userForEdit.getPassword());
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public User createNewUser(User user) {
+
+        Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
+
+        if(optionalUser.isPresent()){
+            throw new EntityNotFoundException("This username already exists in App!");
+        }
+        user.setRole(Role.USER);
+
+        return userRepository.save(user);
+
     }
 
     private long getLoggedInUserId() {

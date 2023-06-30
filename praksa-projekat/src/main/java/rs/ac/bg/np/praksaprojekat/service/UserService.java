@@ -10,4 +10,6 @@ public interface UserService {
     User changePasswordOf(PasswordChangePayload payload) throws IllegalAccessException;
 
     User editUser(long id, User userForEdit);
+
+    User createNewUser(User user);
 }

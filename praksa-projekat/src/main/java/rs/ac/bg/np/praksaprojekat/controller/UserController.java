@@ -17,6 +17,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping("/add")
+    public User createNewUser(@RequestBody User user){
+        return userService.createNewUser(user);
+    }
+
+
     @PutMapping("/password-change")
     public ResponseEntity<Object> changePassword(
             @RequestBody PasswordChangePayload payload){
