@@ -25,7 +25,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/user/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/user/edit-user/{id}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/employee-type/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
