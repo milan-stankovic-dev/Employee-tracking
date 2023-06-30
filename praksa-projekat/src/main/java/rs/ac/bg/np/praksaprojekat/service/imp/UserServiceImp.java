@@ -11,6 +11,7 @@ import rs.ac.bg.np.praksaprojekat.domain.Role;
 import rs.ac.bg.np.praksaprojekat.domain.User;
 import rs.ac.bg.np.praksaprojekat.exception.UserNotLoggedInException;
 //import rs.ac.bg.np.praksaprojekat.exception.UsernameTakenException;
+import rs.ac.bg.np.praksaprojekat.exception.UsernameTakenException;
 import rs.ac.bg.np.praksaprojekat.exception.WrongValueProvidedException;
 import rs.ac.bg.np.praksaprojekat.repository.UserRepository;
 import rs.ac.bg.np.praksaprojekat.service.UserService;
@@ -78,7 +79,7 @@ public class UserServiceImp implements UserService {
         );
 
         if(usernameCheckFromDbUser.isPresent()){
-            throw new RuntimeException("This username is taken.");
+            throw new UsernameTakenException("This username is taken.");
         }
         Optional<User> userOptional = userRepository.findById(id);
 
