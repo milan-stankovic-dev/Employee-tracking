@@ -20,11 +20,11 @@ public class SingleEntryController {
 
     @PostMapping("/check-in")
     public void checkIn(@RequestBody SingleEntry singleEntry){
-         singleEntryService.checkInOut(singleEntry, FromTo.TO);
+         singleEntryService.checkInOut(singleEntry, FromTo.FROM);
     }
 
     @PostMapping("/check-out")
     public void checkOut(@RequestBody SingleEntry singleEntry) {
-        singleEntryService.checkInOut(singleEntry, FromTo.FROM);
+        singleEntryService.checkInOut(singleEntry, FromTo.TO);
     }
 }

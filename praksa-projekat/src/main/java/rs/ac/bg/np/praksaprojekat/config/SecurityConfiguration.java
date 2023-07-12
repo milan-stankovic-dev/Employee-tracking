@@ -28,7 +28,11 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/user/edit-user/{id}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/employee-type/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/employee/add").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"api/employee").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"api/employee/{id}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/user/add").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"api/single-entry/check-in").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"api/single-entry/check-out").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
