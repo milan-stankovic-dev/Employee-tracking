@@ -9,6 +9,7 @@ import rs.ac.bg.np.praksaprojekat.repository.EmployeeRepository;
 import rs.ac.bg.np.praksaprojekat.repository.EmployeeTypeRepository;
 import rs.ac.bg.np.praksaprojekat.service.EmployeeService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,4 +30,22 @@ public class EmployeeServiceImp implements EmployeeService {
        employeeRepository.save(employee);
        return employee;
     }
+
+	@Override
+	public List<Employee> getAll() {
+		return employeeRepository.findAll();
+	}
+
+	@Override
+	public Employee getById(long id) {
+		var employeeOptional = employeeRepository.findById(id);
+		
+		if(employeeOptional.isEmpty()) {
+			throw new EntityNotFoundException("Employee with said id not found.");
+		}
+		
+		Employee employeeFromDB = employeeOptional.get();
+		
+		return employeeFromDB;
+	}
 }
