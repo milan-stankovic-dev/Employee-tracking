@@ -1,7 +1,12 @@
 package rs.ac.bg.np.praksaprojekat.service;
 
-public interface SingleEntryService {
-    void checkIn(long sid) throws Exception;
+import rs.ac.bg.np.praksaprojekat.domain.SingleEntry;
+import rs.ac.bg.np.praksaprojekat.userUtil.FromTo;
 
-    void checkOut(long sid) throws Exception;
+public interface SingleEntryService {
+    void checkIn(SingleEntry singleEntry) ;
+
+    void checkOut(SingleEntry singleEntry) ;
+    
+    void checkInOut(SingleEntry singleEntry, FromTo fromTo) ;
 }
