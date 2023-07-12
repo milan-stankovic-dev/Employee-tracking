@@ -2,6 +2,8 @@ package rs.ac.bg.np.praksaprojekat.service.imp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.persistence.EntityNotFoundException;
 import rs.ac.bg.np.praksaprojekat.domain.Employee;
 import rs.ac.bg.np.praksaprojekat.domain.SingleEntry;
 import rs.ac.bg.np.praksaprojekat.exception.WrongValueProvidedException;
@@ -60,10 +62,25 @@ public class SingleEntryServiceImp implements SingleEntryService {
 
     @Override
     public void checkInOut(SingleEntry singleEntry, FromTo inOrOut) {
+    	
     	var localDateTime = LocalDateTime.now();
+    	
     	switch (inOrOut) {
-    	case FROM -> singleEntry.setTimeFrom(localDateTime.toInstant(ZoneOffset.UTC));
-    	case TO -> singleEntry.setTimeTo(localDateTime.toInstant(ZoneOffset.UTC));
+    	case FROM -> 
+    		singleEntry.setTimeFrom(localDateTime.toInstant(ZoneOffset.UTC));
+  
+    	case TO -> {
+    		long entryForCheckoutID = singleEntry.getId();
+    		var singleEntryFromDBOptional = singleEntryRepository.findById(entryForCheckoutID);
+    		
+    		if(singleEntryFromDBOptional.isEmpty()) {
+    			throw new EntityNotFoundException("Single entry provided in request not found in db.");
+    		}
+    		
+    		var singleEntryFromDB = singleEntryFromDBOptional.get();
+    		
+    		singleEntryFromDB.setTimeTo(localDateTime.toInstant(ZoneOffset.UTC));
+    		}
     	default -> throw new IllegalArgumentException("Inputted value is invalid for checking out or in. "
     			+ "Valid values are: Out, in.");
     	}
