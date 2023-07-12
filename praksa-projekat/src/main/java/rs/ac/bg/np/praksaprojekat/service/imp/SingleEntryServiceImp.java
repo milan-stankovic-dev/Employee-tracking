@@ -12,10 +12,8 @@ import rs.ac.bg.np.praksaprojekat.repository.SingleEntryRepository;
 import rs.ac.bg.np.praksaprojekat.service.SingleEntryService;
 import rs.ac.bg.np.praksaprojekat.userUtil.FromTo;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -85,5 +83,18 @@ public class SingleEntryServiceImp implements SingleEntryService {
     			+ "Valid values are: Out, in.");
     	}
     	singleEntryRepository.save(singleEntry);
+    }
+
+    @Override
+    public Integer numberOfHoursFromTo(Employee employee, LocalDate from, LocalDate to) {
+        List<SingleEntry> singleEntries=singleEntryRepository.findAllByEmployeeEntryId(employee.getId());
+        int hours=0;
+        for(SingleEntry singleEntry:singleEntries){
+            if(singleEntry.getTimeFrom().isAfter(Instant.from(from)) && singleEntry.getTimeFrom().isBefore(Instant.from(to))
+            && singleEntry.getTimeTo().isAfter(Instant.from(from)) && singleEntry.getTimeTo().isBefore(Instant.from(to))){
+                hours+=Duration.between(singleEntry.getTimeFrom(), singleEntry.getTimeTo()).toHours();
+            }
+        }
+        return hours;
     }
 }
