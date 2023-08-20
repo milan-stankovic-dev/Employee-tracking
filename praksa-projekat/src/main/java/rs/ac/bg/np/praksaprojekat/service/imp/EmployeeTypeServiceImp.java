@@ -43,8 +43,13 @@ public class EmployeeTypeServiceImp implements EmployeeTypeService {
     	employeeTypes.add(new EmployeeType(0L,"backend", new HashSet<Employee>()));
     	employeeTypes.add(new EmployeeType(0L,"management", new HashSet<Employee>()));
     	employeeTypes.add(new EmployeeType(0L,"fullstack", new HashSet<Employee>()));
-    	
-    	employeeTypeRepository.saveAll(employeeTypes);
+
+        var employeeTypesListFromDb = employeeTypeRepository.findAll();
+        boolean exists = employeeTypesListFromDb.stream().allMatch(employeeTypes::contains);
+
+        if(!exists) {
+            employeeTypeRepository.saveAll(employeeTypes);
+        }
     }
 
 }
