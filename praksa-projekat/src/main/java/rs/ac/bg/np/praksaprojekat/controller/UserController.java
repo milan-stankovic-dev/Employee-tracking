@@ -32,6 +32,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
         }
     }
+    @PutMapping("/{userId}/password-change")
+    public ResponseEntity<Object> changePasswordNew(
+            @PathVariable Long userId,
+            @RequestBody String newPassword
+    ){
+        try {
+            return ResponseEntity.ok(userService.changePasswordNew(userId,newPassword));
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
+        }
+    }
 
     @PutMapping("/edit-user/{id}")
     public ResponseEntity<Object> editUser(

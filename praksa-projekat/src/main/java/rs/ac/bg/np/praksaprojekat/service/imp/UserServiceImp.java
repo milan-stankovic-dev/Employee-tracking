@@ -110,6 +110,24 @@ public class UserServiceImp implements UserService {
 
     }
 
+    @Override
+    public User changePasswordNew(Long userId, String newPassword) throws IllegalAccessException {
+        Optional<User> optionalUser=userRepository.findById(userId);
+        if(!optionalUser.isPresent()){
+            throw new EntityNotFoundException("The user with this id does not exist!");
+        }
+        User user=optionalUser.get();
+
+        long loggedInUserID = getLoggedInUserId();
+
+        if (loggedInUserID != user.getId()) {
+            throw new IllegalAccessException("You are not authorized to change " +
+                    "this user's password.");
+        }
+        user.setPassword(newPassword);
+        return userRepository.save(user);
+    }
+
     private long getLoggedInUserId() {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();

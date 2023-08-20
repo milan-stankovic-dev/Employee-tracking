@@ -12,4 +12,6 @@ public interface UserService {
     User editUser(long id, User userForEdit);
 
     User createNewUser(User user);
+
+    User changePasswordNew(Long userId, String newPassword) throws IllegalAccessException;
 }
