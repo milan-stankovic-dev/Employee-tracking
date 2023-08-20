@@ -33,7 +33,10 @@ public class UserServiceImp implements UserService {
         user.setEmail("admin");
         user.setPassword("admin");
         user.setRole(Role.ADMIN);
-        userRepository.save(user);
+        if(!userRepository.existsByEmailAndPassword(user.getEmail(),user.getPassword())){
+            userRepository.save(user);
+        }
+
     }
 
     @Override
