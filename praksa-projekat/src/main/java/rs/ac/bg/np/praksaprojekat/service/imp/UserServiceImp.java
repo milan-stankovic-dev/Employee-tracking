@@ -50,7 +50,12 @@ public class UserServiceImp implements UserService {
         }
 
         User userFromDB = userOptional.get();
+        long loggedInUserID = getLoggedInUserId();
 
+        if (loggedInUserID != userFromDB.getId()) {
+            throw new IllegalAccessException("You are not authorized to change " +
+                    "this user's password.");
+        }
         if (!userFromDB.getPassword().equals(payload.oldPassword())) {
             throw new WrongValueProvidedException("The password provided does not" +
                     "match the one in the database.");
@@ -59,13 +64,6 @@ public class UserServiceImp implements UserService {
         if (userFromDB.getPassword().equals(payload.newPassword())) {
             throw new IllegalArgumentException("The password you provided for change " +
                     "must be different from the old password.");
-        }
-
-        long loggedInUserID = getLoggedInUserId();
-
-        if (loggedInUserID != userFromDB.getId()) {
-            throw new IllegalAccessException("You are not authorized to change " +
-                    "this user's password.");
         }
 
         userFromDB.setPassword(payload.newPassword());
